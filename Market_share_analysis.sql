@@ -10,7 +10,6 @@ SELECT DISTINCT State, ([Electric (EV)] +
 [Compressed Natural Gas (CNG)] + Propane + Hydrogen + Methanol + Gasoline + Diesel + [Unknown Fuel]) AS Total
 FROM ['Vehicle_Data']
 )
-
 SELECT v.State, 
 ROUND(([Electric (EV)]/ t.Total) * 100,2 ) as EV_rate, 
 ROUND(([Hybrid Electric (HEV)]/ t.Total) * 100,2 ) as HEV_rate, 
@@ -30,11 +29,11 @@ ORDER BY EV_rate DESC;
 SELECT v.State,
     [Electric (EV)] AS EV_count,
     t.Total,
-    ROUND([Electric (EV)] / NULLIF(Total, 0)* 100.  , 2) AS EV_rate,
+    ROUND(([Electric (EV)]/ t.Total) * 100,2 ) as EV_rate, 
     ROUND(100.0 * [Electric (EV)] / SUM([Electric (EV)]) OVER (), 2) AS Share_of_US_EVs
 FROM ['Vehicle_Data'] v
-WHERE State IN ('California', 'Texas', 'Florida', 'New York')
 Left Join Totals t on v.State = t.State
+WHERE v.State IN ('California', 'Texas', 'Florida', 'New York')
 ORDER BY EV_rate DESC;
 
 
