@@ -32,7 +32,7 @@ Six KPI cards across the top, a fuel-type ranking split into meaningful and nich
 
 **84.6%** of registered vehicles run on gasoline. The national EV rate is **1.24%** — about 3.56 million cars. Add plug-in hybrids and plug-in vehicles reach **1.69%**; add standard hybrids and the electrified share is **4.27%**.
 
-Put plainly: after a decade of EV coverage, roughly 24 in every 25 vehicles on American roads still burn petrol.
+Put plainly: after a decade of EV coverage, more than five out of every six vehicles on American roads still run on petrol.
 
 ### Fuel mix by state
 
@@ -101,7 +101,7 @@ These are **hypotheses**. They fit the patterns in the data, but this dataset ca
 
 **Leading states** have the opposite problem: **grid capacity**. Home and workplace charging at scale means local distribution upgrades, not more public chargers.
 
-**High-volume, low-rate states are the real prize.** Texas and Florida between them hold over 44 million vehicles. Moving Texas from 0.89% to Florida's 1.37% would add roughly 124,000 EVs — more than New York's entire EV fleet.
+**High-volume, low-rate states are the real prize.** Texas and Florida between them hold over 44 million vehicles. Lifting Texas alone from 0.89% to Florida's 1.37% would add roughly 124,000 EVs — close to the entire EV fleet of New York State.
 
 **Hybrids are a leading indicator.** At 2.58%, HEVs outnumber EVs two to one. That looks like appetite for electrification held back by charging access rather than by the technology itself.
 
