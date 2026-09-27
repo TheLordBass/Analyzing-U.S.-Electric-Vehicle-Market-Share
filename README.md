@@ -1,36 +1,52 @@
 # US Vehicle Fuel Type & EV Adoption Analysis
 
-An analysis of vehicle registrations by fuel type across all 50 US states and the District of Columbia, exploring where electric vehicles (EVs) are being adopted, where they lag behind, and what that means for charging infrastructure planning.
+Where are Americans actually buying electric vehicles, where aren't they, and what should that tell anyone deciding where to put a charger?
 
-**Tools:** SQL Server (data import, cleaning, market share queries) · Power BI (Power Query, DAX, dashboard)
+I analysed vehicle registrations by fuel type across all 50 states and the District of Columbia — roughly 287 million vehicles — to answer that. The short version: EV adoption is far more concentrated than the headlines suggest, and the states with the most EVs are not the states with the biggest opportunity.
 
-![Dashboard](images/dashboard.png)
-
----
-
-## Business Questions
-
-1. What percentage of vehicles in each state are EVs, PHEVs, HEVs and gasoline?
-2. Which 5 states have the highest EV adoption rate?
-3. How does California compare with other large states (Texas, Florida, New York)?
-4. Which alternative fuels have a meaningful presence, and which are niche?
-5. Which states lead and lag, and what does this imply for infrastructure planning?
+**Tools:** SQL Server (import, cleaning, market-share queries) · Power BI (Power Query, DAX, dashboard)
 
 ---
 
-## Key Findings
+## The dashboard
 
-### Gasoline still dominates
-- **84.6%** of registered vehicles run on gasoline.
-- The **national EV rate is 1.24%** (3.56M EVs).
-- Adding plug-in hybrids, **plug-in vehicles make up 1.69%**. Including standard hybrids, the **electrified share is 4.27%**.
+![EV adoption dashboard](Dashboard.png)
 
-### EV adoption is highly concentrated
-- **California holds 35.3% of all US EVs** (1.26M), while accounting for only about 13% of registered vehicles.
-- California's EV rate (**3.41%**) is about **2.75x the national average**.
-- Only **14 of 51** states (including DC) are above the national average.
+Six KPI cards across the top, a fuel-type ranking split into meaningful and niche, a scatter of fleet size against EV rate, a choropleth of adoption by state, and top-five / bottom-five league tables. The scatter is the one I'd point a stakeholder at first: it separates *how many* EVs a state has from *how concentrated* they are, and those two things tell very different stories.
 
-| Top 5 EV Adoption | EV Rate | Bottom 5 EV Adoption | EV Rate |
+---
+
+## The questions I set out to answer
+
+1. What share of each state's fleet is EV, PHEV, HEV and gasoline?
+2. Which five states have the highest EV adoption rate?
+3. How does California compare with the other large states — Texas, Florida, New York?
+4. Which alternative fuels have real scale, and which are rounding errors?
+5. Which states lead and lag, and what does that imply for infrastructure planning?
+
+---
+
+## What the data shows
+
+### Gasoline still wins, comfortably
+
+**84.6%** of registered vehicles run on gasoline. The national EV rate is **1.24%** — about 3.56 million cars. Add plug-in hybrids and plug-in vehicles reach **1.69%**; add standard hybrids and the electrified share is **4.27%**.
+
+Put plainly: after a decade of EV coverage, roughly 24 in every 25 vehicles on American roads still burn petrol.
+
+### Fuel mix by state
+
+![EV, PHEV, HEV and gasoline share by state](fuel-mix-by-state.png)
+
+Ranking every state by EV rate puts California first at 3.41% and, further down the table, North Dakota and Mississippi last at 0.13%. That is a **26-fold gap** between the top and bottom of the same country.
+
+### Adoption is concentrated, not widespread
+
+![Top five states by EV adoption rate](top-5-ev-adoption.png)
+
+California alone accounts for **35.3% of every EV in the country** (1.26 million) while holding only about 13% of registered vehicles. Its 3.41% adoption rate is **2.75x the national average**, and only **14 of 51** jurisdictions sit above that average at all.
+
+| Top 5 by EV rate | | Bottom 5 by EV rate | |
 |---|---|---|---|
 | California | 3.41% | North Dakota | 0.13% |
 | District of Columbia* | 2.60% | Mississippi | 0.13% |
@@ -38,68 +54,89 @@ An analysis of vehicle registrations by fuel type across all 50 US states and th
 | Washington | 2.23% | South Dakota | 0.19% |
 | Nevada | 1.85% | West Virginia | 0.19% |
 
-*DC is not a state. If it is excluded, New Jersey (1.84%) enters the top 5.
+*DC is not a state. Exclude it and New Jersey (1.84%) takes fifth place.
 
-### California vs other large states
-| State | EVs | EV Rate |
-|---|---|---|
-| California | 1,256,600 | 3.41% |
-| Florida | 254,900 | 1.37% |
-| New York | 131,300 | 1.16% |
-| Texas | 230,100 | 0.89% |
+### California against the other big fleets
 
-California's EV rate is roughly **2.5x Florida's and nearly 4x Texas's**. Texas has almost as many EVs as Florida but the lowest rate of the four, because its total fleet (25.8M vehicles) is so large. This shows why **both count and rate matter**: fleet size can hide low adoption.
+![California compared with Texas, Florida and New York](ca-vs-large-states.png)
 
-### Alternative fuels: meaningful vs niche
-- **Meaningful:** Ethanol/Flex (E85) is the largest alternative fuel at **7.05%** (20.2M vehicles), followed by HEV (2.58%), diesel (2.50%), EV (1.24%) and biodiesel (0.98%).
-- **Niche:** PHEV (0.46%) sits just below the 0.5% threshold, while CNG, hydrogen and propane are each under 0.01%. No methanol vehicles are registered.
-- **All 16,900 hydrogen vehicles are in California**, the only state with a public hydrogen refuelling network. This is a clear example of adoption following infrastructure.
+| State | EVs | Total fleet | EV rate |
+|---|---|---|---|
+| California | 1,256,600 | 36,850,300 | 3.41% |
+| Florida | 254,900 | 18,583,200 | 1.37% |
+| New York | 131,300 | 11,318,600 | 1.16% |
+| Texas | 230,100 | 25,796,600 | 0.89% |
 
----
+California's rate is about **2.5x Florida's and nearly 4x Texas's**. Texas is the interesting case: it has almost as many EVs as Florida in absolute terms, but the lowest rate of the four, because its 25.8 million-vehicle fleet is so large that the EVs disappear into it.
 
-## What Might Explain the Gap?
+This is why I reported both count and rate throughout. Ranked by count, Texas looks like an EV state. Ranked by rate, it is near the bottom of the large states. Only reporting one of those would mislead whoever is reading.
 
-The factors below are **hypotheses**. They are consistent with the patterns in the data but were not directly measured in this dataset.
+> **A note on the query output:** the `Share_of_US_EVs` column in the screenshot above is calculated with a window function that runs *after* the `WHERE` clause, so 67.09% is California's share of these four states — not of the US. California's genuine national share is the 35.3% quoted earlier. The column name is due a rename.
 
-**1. Population density and driving distances.**
-State size alone doesn't explain adoption, since California is both the largest state by vehicles and the leader. The stronger pattern is **urban vs rural**: dense areas like DC and states with large metro areas lead, while sparsely populated states (North Dakota, Wyoming, South Dakota) trail. Longer distances, fewer public chargers and range concerns make EVs a harder sell in rural areas.
+### Alternative fuels: real versus rounding error
 
-**2. Charging infrastructure.**
-Adoption and charger availability probably reinforce each other: more chargers encourage more EVs, which justify more chargers. The hydrogen finding above is a small-scale example of this effect.
+**Real scale.** Ethanol/Flex (E85) is the largest alternative fuel at **7.05%** (20.2 million vehicles), ahead of hybrids (2.58%), diesel (2.50%), EVs (1.24%) and biodiesel (0.98%).
 
-**3. Political lean.**
-EV adoption closely follows state political lean. The top four (California, DC, Hawaii, Washington) are strongly Democratic-leaning, and all five of the bottom states are strongly Republican-leaning. National surveys have consistently found that Democrats are more likely than Republicans to say they would consider buying an EV. However, political lean overlaps with urbanisation, income, state EV incentives and charger density, so this analysis **cannot isolate politics as a cause**. There are exceptions: Florida leans Republican but is above the national average, and swing-state Nevada is in the top 5.
+**Rounding errors.** PHEVs sit at 0.46%, just under the 0.5% line I used as a cutoff. CNG, hydrogen and propane are each below 0.01%, and there is not a single registered methanol vehicle in the dataset.
+
+The hydrogen number is the one worth pausing on: **all 16,900 hydrogen vehicles in the US are in California**, the only state with a public refuelling network. It is the cleanest example in the whole dataset of adoption following infrastructure rather than the other way round.
 
 ---
 
-## Implications for Infrastructure Planning
+## Why the gap might exist
 
-- **Lagging (mostly rural) states** likely face a chicken-and-egg problem. Investment should focus on **highway corridor fast-charging** to reduce range anxiety on long trips, rather than dense urban networks.
-- **Leading states** face the opposite challenge: **capacity and grid load**, including home and workplace charging, and upgrades to local power distribution.
-- **High-volume, low-rate states (Texas, Florida)** offer the largest growth opportunity in absolute terms. Small rate increases there would add large numbers of EVs.
-- **Hybrid popularity** (2.58% HEV, higher than EV) suggests interest in electrification is held back by range concerns, which better charging access could address.
+These are **hypotheses**. They fit the patterns in the data, but this dataset cannot test them — it contains registrations and nothing else.
+
+**Distance and density.** State size alone doesn't explain it: California is both the biggest fleet and the leader. The stronger pattern is urban versus rural. Dense places (DC, states built around large metros) lead; sparsely populated ones (North Dakota, Wyoming, South Dakota) trail. Longer drives, thinner charger coverage and range anxiety all push the same way.
+
+**Charging infrastructure.** Chargers and EVs almost certainly reinforce each other — more chargers make EVs viable, more EVs justify more chargers. Hydrogen in California is that loop in miniature.
+
+**Political lean.** Adoption tracks it closely. The top four (California, DC, Hawaii, Washington) lean strongly Democratic; all five of the bottom states lean strongly Republican, and national surveys have consistently found Democrats likelier to consider an EV. But political lean is tangled up with urbanisation, income, state incentives and charger density, so **this analysis cannot isolate politics as a cause** — and there are real exceptions. Florida leans Republican and sits above the national average; Nevada is a swing state in the top five.
+
+---
+
+## What I'd do with this if I were planning infrastructure
+
+**Lagging rural states** are stuck in a chicken-and-egg problem. The unlock is **highway-corridor fast charging** to kill range anxiety on long trips — not dense urban networks they don't yet need.
+
+**Leading states** have the opposite problem: **grid capacity**. Home and workplace charging at scale means local distribution upgrades, not more public chargers.
+
+**High-volume, low-rate states are the real prize.** Texas and Florida between them hold over 44 million vehicles. Moving Texas from 0.89% to Florida's 1.37% would add roughly 124,000 EVs — more than New York's entire EV fleet.
+
+**Hybrids are a leading indicator.** At 2.58%, HEVs outnumber EVs two to one. That looks like appetite for electrification held back by charging access rather than by the technology itself.
 
 ---
 
 ## Limitations
 
-- The dataset gives a single point-in-time snapshot, so trends over time can't be assessed.
-- It contains no data on chargers, income, population density or politics, so the explanations above are hypotheses rather than tested findings.
-- Fuel type categories come from the source data. "Unknown Fuel" (0.59%) is included in totals.
+- A single point-in-time snapshot, so I can't show trends or growth rates.
+- No charger, income, density or political data in the source, which is why the explanations above stay labelled as hypotheses.
+- Fuel categories come from the source data as-is. "Unknown Fuel" (0.59%) is left in the totals rather than redistributed.
 
-## Next Steps
+## Where I'd take it next
 
-- Add charging station counts by state (US DOE Alternative Fuels Data Center) to measure **chargers per EV**.
-- Add population density, median income and election results to test the hypotheses above with correlation or regression analysis.
-- Add registration data from earlier years to track adoption growth.
+- Join charging-station counts from the **US DOE Alternative Fuels Data Center** to get chargers per EV by state — the single most useful missing column.
+- Add population density, median income and election results, then test the hypotheses above properly with correlation or regression rather than inference.
+- Pull earlier registration years to turn a snapshot into a growth curve.
 
 ---
 
-## Repository Contents
+## Repository contents
 
 | File | Description |
 |---|---|
-| `Vehicle_Data.csv` | Source data: registered vehicles by state and fuel type |
-| `queries.sql` | SQL Server queries for market share analysis |
-| `EV_Dashboard.pbix` | Power BI dashboard |
-| `images/dashboard.png` | Dashboard screenshot |
+| `Market_share_analysis.sql` | SQL Server queries: fuel-type market share, top-5 adoption, large-state comparison |
+| `EV Viz.pbix` | Power BI report, including Power Query steps and DAX measures |
+| `Dashboard.png` | Dashboard screenshot |
+| `fuel-mix-by-state.png` | Query result: fuel-type share by state |
+| `top-5-ev-adoption.png` | Query result: top five states by EV rate |
+| `ca-vs-large-states.png` | Query result: California vs Texas, Florida and New York |
+
+The source registration data is not committed to the repository.
+
+---
+
+### About me
+
+Data Analyst based in **Manchester, UK**, working in **SQL, Power BI, Tableau and Excel**.
+[LinkedIn](https://www.linkedin.com/in/ibomeno-basiekanem/) · [Portfolio](https://thelordbass.github.io/)
