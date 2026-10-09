@@ -26,11 +26,11 @@ FROM ['Vehicle_Data'] v
 Left Join Totals t on v.State = t.State
 ORDER BY EV_rate DESC;
 
-SELECT v.State,
-    [Electric (EV)] AS EV_count,
-    t.Total,
-    ROUND(([Electric (EV)]/ t.Total) * 100,2 ) as EV_rate, 
-    ROUND(100.0 * [Electric (EV)] / SUM([Electric (EV)]) OVER (), 2) AS Share_of_US_EVs
+SELECT v.State
+[Electric (EV)] AS EV_count,
+t.Total,
+ROUND(([Electric (EV)]/ t.Total) * 100,2 ) as EV_rate, 
+ROUND(100.0 * [Electric (EV)] / SUM([Electric (EV)]) OVER (), 2) AS Share_of_US_EVs
 FROM ['Vehicle_Data'] v
 Left Join Totals t on v.State = t.State
 WHERE v.State IN ('California', 'Texas', 'Florida', 'New York')
